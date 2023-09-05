@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Capturing and Displaying Form Data using DOM Manipulation</title>
+  </head>
+  <body>
+    <input type="text" id="myInput" />
+    <button id="myButton">Submit</button>
+    <p id="output"></p>
+
+    <script>
+      document
+        .querySelector("#myButton")
+        .addEventListener("click", function () {
+          let input = document.querySelector("#myInput").value;
+          alert(input);
+          document.querySelector("#output").innerHTML =
+            "Entered value: " + input;
+        });
+    </script>
+  </body>
+</html>
