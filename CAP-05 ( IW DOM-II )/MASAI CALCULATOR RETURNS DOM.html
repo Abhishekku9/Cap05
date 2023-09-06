@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Masai Calculator</title>
+
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+      }
+      .calculator {
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 5px;
+        border-radius: 5px;
+      }
+      .calculator button {
+        font-size: 24px;
+        padding: 20px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        border: none;
+        height: 70px;
+        width: 70px;
+      }
+      #display {
+        grid-column: span 4;
+        text-align: right;
+        height: 40px;
+        font-size: 32px;
+        padding: 10px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+      }
+      button[data-type="number"] {
+        background-color: white;
+        border-radius: 5px;
+      }
+      button[data-type="operator"],
+      button[data-type="equal"] {
+        background-color: black;
+        color: white;
+        border-radius: 5px;
+      }
+      button[data-type="clear"] {
+        background-color: red;
+        color: white;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center; color: #058081">Masai Calculator</h1>
+
+    <div class="calculator">
+      <div id="display">0</div>
+      <button data-type="number">1</button>
+      <button data-type="number">2</button>
+      <button data-type="number">3</button>
+      <button data-type="operator">+</button>
+      <button data-type="number">4</button>
+      <button data-type="number">5</button>
+      <button data-type="number">6</button>
+      <button data-type="operator">-</button>
+      <button data-type="number">7</button>
+      <button data-type="number">8</button>
+      <button data-type="number">9</button>
+      <button data-type="operator">X</button>
+      <button data-type="clear">C</button>
+      <button data-type="number">0</button>
+      <button data-type="equal">=</button>
+      <button data-type="operator">/</button>
+    </div>
+  </body>
+</html>
+<script>
+  let keypadButton = document.querySelectorAll('button[data-type="number"]'); // array
+
+  let operatorButton = document.querySelectorAll(
+    'button[data-type="operator"]'
+  ); // array
+  let equal = document.querySelector('button[data-type="equal"]');
+  let heading = document.getElementById("display");
+  let clear = document.querySelector('button[data-type="clear"]');
+
+  // first no  after operator we have second no.
+
+  let firstNumber = "";
+  let secondNumber = "";
+  let IsFirstNumber = true;
+  let operators = "";
+
+  equal.addEventListener("click", function () {
+    heading.innerText = calculate(firstNumber, secondNumber, operators);
+  });
+
+  clear.addEventListener("click", function () {
+    heading.innerText = "0";
+    firstNumber = "";
+    secondNumber = "";
+    IsFirstNumber = true;
+    operators = "";
+  });
+
+  for (let i = 0; i < keypadButton.length; i++) {
+    keypadButton[i].addEventListener("click", function () {
+      if (IsFirstNumber == true) {
+        firstNumber += keypadButton[i].innerText; // concatenation
+        heading.innerText = firstNumber;
+      } else {
+        secondNumber += keypadButton[i].innerText; // concatenation
+        heading.innerText = secondNumber;
+      }
+    });
+  }
+  for (let i = 0; i < operatorButton.length; i++) {
+    operatorButton[i].addEventListener("click", function () {
+      IsFirstNumber = false;
+      operators = operatorButton[i].innerText;
+      heading.innerText = operators;
+    });
+  }
+  function calculate(firstNumber, secondNumber, operators) {
+    if (firstNumber === "" || secondNumber === "" || operators === "") {
+      return "0";
+    }
+
+    switch (operators) {
+      case "+":
+        return (Number(firstNumber) + Number(secondNumber)).toString();
+
+      case "-":
+        return (Number(firstNumber) - Number(secondNumber)).toString();
+      case "X":
+        return (Number(firstNumber) * Number(secondNumber)).toString();
+      case "/":
+        if (Number(secondNumber) === 0) {
+          return "Infinity"; // Handle division by zero
+        }
+        return (Number(firstNumber) / Number(secondNumber)).toString();
+    }
+  }
+</script>
