@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AUTOMOBILE INHERITANCE MODEL</title>
+  </head>
+  <body></body>
+  <script>
+    
+    const automobilePrototype = {
+      startEngine() {
+        console.log("Engine started.");
+      },
+      stopEngine() {
+        console.log("Engine stopped.");
+      },
+    };
+
+    const fourWheelerPrototype = Object.create(automobilePrototype);
+    fourWheelerPrototype.numWheels = 4;
+
+    function Car(make, model) {
+      const car = Object.create(fourWheelerPrototype);
+      car.make = make;
+      car.model = model;
+      return car;
+    }
+
+    function Truck(make, model) {
+      const truck = Object.create(fourWheelerPrototype);
+      truck.make = make;
+      truck.model = model;
+      return truck;
+    }
+
+    const myCar = Car("Tata", "Nexon");
+    const myTruck = Truck("Mahindra", "Jeeto");
+
+    myCar.startEngine();
+    console.log(
+      `My car is a ${myCar.make} ${myCar.model} with ${myCar.numWheels} wheels.`
+    );
+    myTruck.stopEngine();
+    console.log(
+      `My truck is a ${myTruck.make} ${myTruck.model} with ${myTruck.numWheels} wheels.`
+    );
+
+    // Base Automobile constructor using constructor functions
+    function Automobile() {
+      this.numWheels = 4;
+    }
+
+    Automobile.prototype.startEngine = function () {
+      console.log("Engine started.");
+    };
+
+    Automobile.prototype.stopEngine = function () {
+      console.log("Engine stopped.");
+    };
+
+    function CarConstructor(make, model) {
+      Automobile.call(this);
+      this.make = make;
+      this.model = model;
+    }
+
+    CarConstructor.prototype = Object.create(Automobile.prototype);
+    CarConstructor.prototype.constructor = CarConstructor;
+
+    function TruckConstructor(make, model) {
+      Automobile.call(this);
+      this.make = make;
+      this.model = model;
+    }
+
+    TruckConstructor.prototype = Object.create(Automobile.prototype);
+    TruckConstructor.prototype.constructor = TruckConstructor;
+
+    const myCarConstructor = new CarConstructor("Toyota", "Corolla");
+    const myTruckConstructor = new TruckConstructor("Ford", "F-150");
+
+    myCarConstructor.startEngine();
+    console.log(
+      `My car is a ${myCarConstructor.make} ${myCarConstructor.model} with ${myCarConstructor.numWheels} wheels.`
+    );
+    myTruckConstructor.stopEngine();
+    console.log(
+      `My truck is a ${myTruckConstructor.make} ${myTruckConstructor.model} with ${myTruckConstructor.numWheels} wheels.`
+    );
+  </script>
+</html>

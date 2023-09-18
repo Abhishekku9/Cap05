@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIMULATION GAME</title>
+  </head>
+  <body></body>
+  <script>
+    // Vehicle constructor function
+    function Vehicle(brand, model, speed, fuelType) {
+      this.brand = brand;
+      this.model = model;
+      this.speed = speed;
+      this.fuelType = fuelType;
+    }
+
+    Vehicle.prototype.accelerate = function (increase) {
+      this.speed += increase;
+      console.log(
+        `${this.brand} ${this.model} is accelerating. Current speed: ${this.speed} kmph`
+      );
+    };
+
+    Vehicle.prototype.brake = function (decrease) {
+      this.speed -= decrease;
+      console.log(
+        `${this.brand} ${this.model} is braking. Current speed: ${this.speed} kmph`
+      );
+    };
+
+    Vehicle.prototype.refuel = function () {
+      console.log(`${this.brand} ${this.model} is refueling.`);
+    };
+
+    // Car constructor function
+    function Car(brand, model, speed, fuelType, numberOfWheels) {
+      Vehicle.call(this, brand, model, speed, fuelType);
+      this.numberOfWheels = numberOfWheels;
+    }
+
+    // Inherit from Vehicle
+    Car.prototype = Object.create(Vehicle.prototype);
+    Car.prototype.constructor = Car;
+
+    Car.prototype.honk = function () {
+      console.log(`${this.brand} ${this.model} is honking: Pom! Pom!`);
+    };
+
+    // Airplane constructor function
+    function Airplane(
+      brand,
+      model,
+      speed,
+      fuelType,
+      numberOfEngines,
+      hasLandingGear
+    ) {
+      Vehicle.call(this, brand, model, speed, fuelType);
+      this.numberOfEngines = numberOfEngines;
+      this.hasLandingGear = hasLandingGear;
+    }
+
+    // Inherit from Vehicle
+    Airplane.prototype = Object.create(Vehicle.prototype);
+    Airplane.prototype.constructor = Airplane;
+
+    Airplane.prototype.takeOff = function () {
+      console.log(`${this.brand} ${this.model} is taking off.`);
+    };
+
+    // Create instances of Car and Airplane
+    const myCar = new Car("Honda", "City", 0, "Petrol", 4);
+    const myAirplane = new Airplane("Boeing", "747", 0, "Jet fuel", 4, true);
+
+    // Demonstrate methods for Car
+    myCar.accelerate(30);
+    myCar.brake(10);
+    myCar.refuel();
+    myCar.honk();
+
+    // Demonstrate methods for Airplane
+    myAirplane.accelerate(100);
+    myAirplane.brake(20);
+    myAirplane.refuel();
+    myAirplane.takeOff();
+  </script>
+</html>
